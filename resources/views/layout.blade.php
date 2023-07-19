@@ -37,7 +37,7 @@
     <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
             <div>
-                <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+                <img src={{asset('assets/images/logo-icon.png')}} class="logo-icon" alt="logo icon">
             </div>
             <div>
                 <h4 class="logo-text">FOODY</h4>
@@ -63,7 +63,7 @@
             </li>
             <li>
                 <a href="#">
-                    <div class="parent-icon"><i class='bx bx-cookie'></i>
+                    <div class="parent-icon"><i class='bx bx-user'></i>
                     </div>
                     <div class="menu-title">Users</div>
                 </a>
@@ -122,7 +122,7 @@
                 <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
                 </div>
 
-                <div class="position-relative d-lg-block d-none" >
+                <div class="position-relative d-lg-block d-none">
 
                 </div>
 
@@ -163,37 +163,45 @@
                 </div>
                 {{--Tài khoản--}}
                 <div class="user-box dropdown px-3">
-                    <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
-                        <div class="user-info">
-                            <p class="user-name mb-0">Pauline Seitz</p>
-                            <p class="designattion mb-0">Web Designer</p>
+
+                    @if (Route::has('login'))
+                        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                            @auth
+                                <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
+                                   href="#"
+                                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i
+                                        class="bx bx-user fs-3"></i>
+                                    <div class="user-info">
+                                        <p class="user-name mb-0">{{ Auth::user()->name }}</p>
+                                        <p class="designattion mb-0">{{ Auth::user()->email }}</p>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item d-flex align-items-center"
+                                               href={{route('profile.edit')}}><i
+                                                    class="bx bx-user fs-5"></i><span>Profile</span></a>
+                                        </li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <a class="dropdown-item d-flex align-items-center"
+                                                   href="{{route('logout') }}"
+                                                   onclick="event.preventDefault(); this.closest('form').submit()"><i
+                                                        class="bx bx-log-out-circle"></i><span>Logout</span></a>
+
+                                        </form>
+
+                                    </ul>
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}" class="nav-link menu-title">Log in</a>
+
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="nav-link menu-title">Register</a>
+                                @endif
+                            @endauth
                         </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bx bx-user fs-5"></i><span>Profile</span></a>
-                        </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bx bx-cog fs-5"></i><span>Settings</span></a>
-                        </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bx bx-home-circle fs-5"></i><span>Dashboard</span></a>
-                        </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bx bx-dollar-circle fs-5"></i><span>Earnings</span></a>
-                        </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bx bx-download fs-5"></i><span>Downloads</span></a>
-                        </li>
-                        <li>
-                            <div class="dropdown-divider mb-0"></div>
-                        </li>
-                        <li><a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bx bx-log-out-circle"></i><span>Logout</span></a>
-                        </li>
-                    </ul>
+                    @endif
+
                 </div>
             </nav>
         </div>
@@ -216,8 +224,6 @@
     </footer>
 </div>
 <!--end wrapper-->
-
-
 
 
 <!-- Bootstrap JS -->
