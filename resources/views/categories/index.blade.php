@@ -25,7 +25,7 @@
                 <td>
                     <a href="{{route('categories.edit', $item)}}" class="btn btn-primary">Update</a>
                     <button class="btn btn-danger"
-                            onclick="document.getElementById('item-{{$item -> id}}').submit()">Delete</button>
+                            onclick="if(true){confirm('Do you really want to delete?')? document.getElementById('item-{{$item -> id}}').submit() : ''} ">Delete</button>
                     <form action="{{route('categories.destroy', $item)}}"
                           id="item-{{$item -> id}}"
                           method="post"
